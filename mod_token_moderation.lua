@@ -19,10 +19,12 @@ module:hook("muc-room-created", function(event)
         local room = event.room;
         local _handle_normal_presence = room.handle_normal_presence;
         local _handle_first_presence = room.handle_first_presence;
+        local isFirstUser = false;
         -- Wrap presence handlers to set affiliations from token whenever a user joins
         room.handle_normal_presence = function(thisRoom, origin, stanza)
                 local pres = _handle_normal_presence(thisRoom, origin, stanza);
                 setupAffiliation(thisRoom, origin, stanza);
+                isFirstUser = true;
                 return pres;
         end;
         room.handle_first_presence = function(thisRoom, origin, stanza)
@@ -37,8 +39,9 @@ module:hook("muc-room-created", function(event)
                 if actor == "token_plugin" then
                         return _set_affiliation(room, true, jid, affiliation, reason)
                 -- noone else can assign owner (in order to block prosody/jisti's built in moderation functionality
-                elseif affiliation == "owner" then
-                        return nil, "modify", "not-acceptable"
+                elseif isFirstUser == false and affiliation == "owner" then
+                        return _set_affiliation(room, actor, jid, affiliation, reason);
+                        -- return nil, "modify", "not-acceptable"
                 -- keep other affil stuff working as normal (hopefully, haven't needed to use/test any of it)
                 else
                         return _set_affiliation(room, actor, jid, affiliation, reason);
