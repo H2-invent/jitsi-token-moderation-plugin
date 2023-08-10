@@ -1,4 +1,8 @@
-# jitsi-token-moderation-plugin
+# jitsi-token-moderation-plugin with promotion of other participants during the conference
+__This version otf the token moerator plugin allows to promote participants during the meeting to moderators__
+A lot of users asks to promote participants during a meeting. With the original plugin this was not possible but here we fixed this issue.
+
+
 Lua plugin for jitsi which determines whether users are moderator or not based on token contents
 
 Note im just sharing this because I needed it for a project and it thought it might help people out there, but im not looking to maintain it or make improvements or anything so I probably wont be help much with any problems you might have. 
@@ -10,8 +14,7 @@ There's probably plenty of possible improvement as this is my first look at lua/
 
 I'm not sure of how well it will work in 1 on 1 chats since I think prosody uses a different protocol for this by default, you can disable this option in the jitsi meet javascript config file though (search for p2p). 
 
-This may well break may other features relying on prosody affiliations, such as: banning people, assigning roles within jitsi/prosody, using username/password login, and more. So try it with your setup and check whether it works.
-
+__This version otf the token moerator plugin allows to promote participants during the meeting to moderators__
 ## Installation
 ### Standalone
 - Put the lua file somewhere on your jitsi server
